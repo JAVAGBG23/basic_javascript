@@ -40,6 +40,7 @@ const taskManager = {
     alert("Task added successfully!");
     menu();
   },
+
   listAllTasks: function () {
     if (this.tasks.length === 0) {
       alert("No tasks available!");
@@ -52,6 +53,39 @@ const taskManager = {
         task.description
       }, Completed: ${task.completed ? "Yes" : "No"}\n`;
     });
+
+    alert(message);
+    menu();
+  },
+
+  completeTask: function () {
+    const id = parseInt(
+      prompt("Enter the id of the task you want to complete:")
+    );
+    const task = this.tasks.find((task) => task.id === id);
+
+    if (!task) {
+      alert("Task not found!");
+      menu();
+    }
+
+    task.completed = true;
+    alert("Task marked as complete!");
+    menu();
+  },
+
+  listCompletedTasks: function () {
+    const completedTasks = this.tasks.filter((task) => task.completed);
+    if (completedTasks.length === 0) {
+      alert("No completed tasks!");
+      menu();
+    }
+
+    let message = "";
+    completedTasks.forEach((task) => {
+      message += `Id: ${task.id}, Description: ${task.description}\n`;
+    });
+
     alert(message);
     menu();
   },
@@ -71,14 +105,16 @@ function menu() {
       taskManager.addTask();
       break;
     case 2:
-      console.log("Complete a task");
+      //console.log("Complete a task");
+      taskManager.completeTask();
       break;
     case 3:
       //console.log("List all tasks");
       taskManager.listAllTasks();
       break;
     case 4:
-      console.log("List all completed tasks");
+      //console.log("List all completed tasks");
+      taskManager.listCompletedTasks();
       break;
     case 5:
       alert("Goodbye!");
